@@ -1,5 +1,5 @@
 # Ex.05 Design a Website for Server Side Processing
-## Date:28-04-25
+## Date:29-04-25
 
 ## AIM:
  To design a website to calculate the power of a lamp filament in an incandescent bulb in the server side. 
@@ -34,90 +34,125 @@ Publish the website in the given URL.
 ## PROGRAM :
 ```
 math.html
-<!DOCTYPE html>
 <html>
+
 <head>
-    <style>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>POWER OF LAMP IN INCANDESCENT BULD</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style type="text/css">
         body {
-            color: orange;
+            background-color:white;
+        }
+
+        .edge {
+            display: flex;
+            height: 100vh;
+            width: 100%;    
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            display: block;
+            width: 500px;
+            min-height: 300px;
+            font-size: 20px;
+            background: rgb(21, 208, 215);
+            background: linear-gradient(90deg, rgb(99, 237, 118) 9%, rgb(193, 166, 202) 56%);
+            border-radius: 10px;
+            box-shadow: rgba(239, 5, 24, 0.35) 0px 5px 15px;
+        }
+
+        .formelt {
+            color: whitesmoke;
             text-align: center;
             margin-top: 7px;
             margin-bottom: 6px;
         }
+
         h1 {
-            color: rgb(255, 0, 179);
+            color: white;
             text-align: center;
             padding-top: 20px;
         }
+        input{
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+
+        }
     </style>
 </head>
+
 <body>
     <div class="edge">
         <div class="box">
-            <h1>Area of a Rectangle</h1>
+            <h1>POWER OF LAMP IN INCANDESCENT BULB</h1>
             <form method="POST">
                 {% csrf_token %}
                 <div class="formelt">
-                    Length <input type="text" name="length" value="{{l}}">(in m)<br>
+                    INTENSITY : <input type="text" name="Intensity" value="{{I}}"></input>(in A)<br />
                 </div>
                 <div class="formelt">
-                    Breadth <input type="text" name="breadth" value="{{b}}">(in m)<br>
+                    RESISITANCE : <input type="text" name="Resistence" value="{{R}}"></input>(in Ω)<br />
                 </div>
                 <div class="formelt">
-                    <input type="submit" value="Calculate"><br><br>
+                    <input type="submit" value="Calculate"></input><br />
                 </div>
-
                 <div class="formelt">
-                    Area <input type="text" name="area" value="{{area}}">m<sup>2</sup><br>
+                    POWER : <input type="text" name="Power" value="{{Power}}"></input>W<br />
                 </div>
             </form>
         </div>
     </div>
 </body>
-</html>
 
+</html>
 views.py
 
 from django.shortcuts import render
 
-def rectarea(request):
-    context = {}
-    context['area'] = "0"
-    context['l'] = "0"
-    context['b'] = "0"
+def powerlamp(request):
+    context={}
+    context['Power'] = ""
+    context['I'] = ""
+    context['R'] = ""
     if request.method == 'POST':
         print("POST method is used")
-        l = request.POST.get('length', '0')
-        b = request.POST.get('breadth', '0')
-        print('request =', request)
-        print('Length =', l)
-        print('Breadth =', b)
-        area = int(l) * int(b)
-        context['area'] = area
-        context['l'] = l
-        context['b'] = b
-        print('Area =', area)
-    return render(request, 'mathapp/math.html', context)
+        I = request.POST.get('Intensity','')
+        R = request.POST.get('Resistence','')
+        print('request=',request)
+        print('Intensity=',I)
+        print('Resistence=',R)
+        Power = int(I) * int(I) * int(R)
+        context['Power'] = Power
+        context['I'] = I
+        context['R'] = R
+        print('Power=',Power)
+    return render(request,'mathapp/math.html',context)
+
 
 urls.py
 
 from django.contrib import admin
 from django.urls import path
 from mathapp import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('areaofrectangle/', views.rectarea, name="areaofrectangle"),
-    path('', views.rectarea, name="areaofrectangleroot"),
+    path('PowerOfLampFilamentInAnIncandescentBulb/',views.powerlamp,name="PowerOfLampFilamentInAnIncandescentBulb"),
+    path('',views.powerlamp,name="PowerOfLampFilamentInAnIncandescentBulb"),
 ]
 
 ```
 ## SERVER SIDE PROCESSING:
-![alt text](<Screenshot 2025-04-28 210601.png>) SERVER SIDE PROCESSING:
+![alt text](<yash/mathapp/templates/mathapp/Screenshot 2025-04-29 141620.png>) 
 
 
 ## HOME PAGE:
-![alt text](<Homepage screenshot.png>)
+![alt text](<yash/mathapp/templates/mathapp/homepage1 ss.png>)
 
 
 ## RESULT:
